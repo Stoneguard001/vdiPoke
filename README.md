@@ -11,6 +11,17 @@ make        # -> bin/vdi_poke.exe
 make vet
 ```
 
+Or download `vdi_poke.exe` from the [latest release](https://github.com/PAllisonVSO/vdi_poke/releases/latest).
+
+## Releasing
+
+Push a `v*` tag and GitHub Actions builds `vdi_poke.exe` (with the tag as its version) plus a `.sha256` checksum and publishes them as a release:
+
+```sh
+git tag v0.0.2
+git push origin v0.0.2
+```
+
 ## Run
 
 Copy `vdi_poke.exe` to the Windows machine and run it from a console:
@@ -20,6 +31,7 @@ vdi_poke.exe                       # F15 every 10 minutes
 vdi_poke.exe -i 5m                 # custom interval (long form: -interval)
 vdi_poke.exe -u 17:30              # stop automatically at 5:30 PM (long form: -until)
 vdi_poke.exe -k alttab             # Alt+Tab instead of F15 (long form: -key)
+vdi_poke.exe -v                    # print version (long form: -version)
 vdi_poke.exe ?                     # help (also /?, -?, -h)
 ```
 

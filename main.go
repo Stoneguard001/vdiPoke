@@ -10,6 +10,8 @@ import (
 	"time"
 )
 
+var version = "dev"
+
 var keyActions = map[string]func() error{
 	"f15":    sendF15,
 	"alttab": sendAltTab,
@@ -25,6 +27,9 @@ func main() {
 	flag.StringVar(&until, "u", "", "")
 	flag.StringVar(&keyName, "key", keyName, "")
 	flag.StringVar(&keyName, "k", keyName, "")
+	var showVersion bool
+	flag.BoolVar(&showVersion, "version", false, "")
+	flag.BoolVar(&showVersion, "v", false, "")
 	flag.Usage = printUsage
 
 	if wantsHelp(os.Args[1:]) {
@@ -32,6 +37,11 @@ func main() {
 		return
 	}
 	flag.Parse()
+
+	if showVersion {
+		fmt.Println(version)
+		return
+	}
 
 	if interval <= 0 {
 		log.Fatal("interval must be positive")
@@ -109,6 +119,7 @@ Options:
   -i, -interval <duration>  time between keypresses, e.g. 10m, 90s (default 10m)
   -u, -until <HH:MM>        stop at this local time (24h), e.g. 17:30
   -k, -key <f15|alttab>     key to send (default f15)
+  -v, -version              print the version
   -h, -?, /?, ?             show this help
 
 Examples:

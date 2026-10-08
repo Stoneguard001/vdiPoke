@@ -1,0 +1,36 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      GOOS: windows
+      GOARCH: amd64
+      CGO_ENABLED: "0"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+
+      - name: Vet
+        run: go vet ./...
+
+      - name: Build
+        run: |
+          go build -trimpath -ldflags "-s -w -X main.version=${GITHUB_REF_NAME}" -o vdi_poke.exe .
+          sha256sum vdi_poke.exe > vdi_poke.exe.sha256
+
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" vdi_poke.exe vdi_poke.exe.sha256 --title "$GITHUB_REF_NAME" --generate-notes
