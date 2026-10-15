@@ -2,6 +2,14 @@
 
 Sends a keypress (F15 by default, or Alt+Tab) on a timer to keep a Windows session from going idle. Single static `.exe`, no dependencies.
 
+## Purpose
+
+vdi_poke keeps VDI sessions alive. Its only job is to stop a virtual desktop session from idling out, disconnecting or locking while you're away from it, for example during a long build, a download or a meeting.
+
+It is **not** a work or productivity indicator, and it isn't meant to fake one. It doesn't simulate typing, mouse movement or app usage, and it shouldn't be used to suggest that someone is working when they aren't. The keypress it sends exists only so the session's idle timer sees input. Windows shares that idle timer with every app, so presence indicators such as Teams may also stay "Available" as a side effect. That isn't the goal, and you shouldn't rely on it.
+
+Before you use it, check that it's allowed under your organization's policies for idle timeouts and session locking.
+
 ## Build
 
 Requires Docker (no local Go install needed):
@@ -11,7 +19,7 @@ make        # -> bin/vdi_poke.exe
 make vet
 ```
 
-Or download `vdi_poke.exe` from the [latest release](https://github.com/PAllisonVSO/vdi_poke/releases/latest).
+Or download `vdi_poke.exe` from the [latest release](https://github.com/Stoneguard001/vdiPoke/releases/latest).
 
 ## Releasing
 
